@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>左右手无聊搏击</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <div class="header-top">
+                <h1>《左右手无聊搏击》</h1>
+                <div class="timer-display" id="timerDisplay">12</div>
+            </div>
+            <div class="scores">
+                <div class="score player1-score">
+                    <div class="player-avatar-container">
+                        <canvas id="player1AvatarCanvas" class="player-avatar" width="40" height="40"></canvas>
+                    </div>
+                    <span class="score-value" id="score1">0</span>
+                </div>
+                <div class="score player2-score">
+                    <div class="player-avatar-container">
+                        <canvas id="player2AvatarCanvas" class="player-avatar" width="40" height="40"></canvas>
+                    </div>
+                    <span class="score-value" id="score2">0</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="game-wrapper">
+            <canvas id="gameCanvas" width="800" height="300"></canvas>
+            
+            <div class="controls-info">
+                <div class="control-player1">
+                    <h3>左手控制</h3>
+                    <p>W A S D 键</p>
+                </div>
+                <div class="control-player2">
+                    <h3>右手控制</h3>
+                    <p>⬆️ ⬇️ ⬅️ ➡️ 方向键</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="avatar-selection-screen" id="avatarSelectionScreen">
+            <div class="avatar-selection-content">
+                <h2>选择武器</h2>
+                <div class="avatar-selection">
+                    <div class="avatar-section">
+                        <h3>左手</h3>
+                        <div class="avatar-grid" id="avatarGrid1">
+                            <!-- 武器选项将通过JS生成 -->
+                        </div>
+                    </div>
+                    <div class="avatar-section">
+                        <h3>右手</h3>
+                        <div class="avatar-grid" id="avatarGrid2">
+                            <!-- 武器选项将通过JS生成 -->
+                        </div>
+                    </div>
+                </div>
+                <button id="startGameBtn" class="start-game-btn" disabled>开始游戏</button>
+            </div>
+        </div>
+        
+        <div class="game-over-screen" id="gameOverScreen">
+            <div class="game-over-content">
+                <div class="winner-display" id="winnerDisplay">
+                    <canvas id="winnerAvatar" class="winner-avatar" width="50" height="50"></canvas>
+                    <h2 id="winnerText"></h2>
+                </div>
+                <div class="game-over-scores">
+                    <div class="game-over-score-item">
+                        <canvas id="gameOverPlayer1Avatar" class="game-over-avatar" width="30" height="30"></canvas>
+                        <span id="gameOverPlayer1Score"></span>
+                    </div>
+                    <div class="game-over-score-item">
+                        <canvas id="gameOverPlayer2Avatar" class="game-over-avatar" width="30" height="30"></canvas>
+                        <span id="gameOverPlayer2Score"></span>
+                    </div>
+                </div>
+                <button id="restartBtn" class="restart-btn">再玩一次</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="game.js"></script>
+</body>
+</html>
