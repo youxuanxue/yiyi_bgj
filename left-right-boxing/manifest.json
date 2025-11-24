@@ -1,0 +1,27 @@
+{
+  "name": "左右手无聊搏击",
+  "short_name": "搏击游戏",
+  "description": "左右手对战小游戏，12秒内比拼收集数量！",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ff6b9d",
+  "orientation": "landscape",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["games", "entertainment"],
+  "lang": "zh-CN",
+  "dir": "ltr"
+}

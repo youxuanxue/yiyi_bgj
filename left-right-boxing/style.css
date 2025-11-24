@@ -21,12 +21,15 @@ body {
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     max-width: 900px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .header {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     position: relative;
+    flex-shrink: 0;
 }
 
 .header-top {
@@ -34,35 +37,37 @@ body {
     justify-content: center;
     align-items: center;
     position: relative;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     width: 100%;
 }
 
 .header h1 {
     color: #ff6b9d;
-    font-size: 2.5em;
+    font-size: 2em;
     margin: 0;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .scores {
     display: flex;
-    justify-content: space-around;
-    margin-bottom: 15px;
-    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
 }
 
 .score {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    padding: 15px 30px;
-    border-radius: 15px;
-    flex: 1;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    padding: 8px 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
+    gap: 8px;
+    min-width: 100px;
 }
 
 .player1-score {
@@ -77,12 +82,12 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 5px;
+    margin-bottom: 0;
 }
 
 .player-avatar {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.3);
     border: 2px solid rgba(255, 255, 255, 0.5);
@@ -90,7 +95,7 @@ body {
 
 .score-value {
     display: block;
-    font-size: 2.5em;
+    font-size: 1.5em;
     font-weight: bold;
 }
 
@@ -98,46 +103,98 @@ body {
     font-size: 2em;
     color: #333;
     font-weight: bold;
+    /* 绝对定位到右上角 */
     position: absolute;
-    top: 20px;
-    right: 20px;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 10px 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    top: 0;
+    right: 0;
+    /* 去掉背景、边框、阴影等button样式 */
+    background: transparent;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    z-index: 100;
+    /* 使用相对定位的容器，让数字可以绝对定位在闹钟上方 */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.2em;
+    height: 1.2em;
+    /* 固定transform，避免位置变化 */
+    transform: none;
+}
+
+.timer-icon {
+    /* 闹钟图标作为背景 */
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    line-height: 1;
+    opacity: 0.9;
+    /* 让图标完美居中 */
+    text-align: center;
+}
+
+.timer-value {
+    /* 数字绝对定位在闹钟图标中心 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.5em;
+    font-weight: bold;
+    line-height: 1;
+    z-index: 2;
+    /* 微调位置，让数字更精确居中（根据字体调整） */
+    margin-top: -0.03em;
+    margin-left: 0;
+    /* 确保数字清晰可见 */
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+    /* 使用flexbox精确居中 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .timer-display.warning {
     color: #ff0000;
-    animation: pulse 0.5s infinite;
+    /* 整体不缩放，避免位置变化 */
+    animation: none;
 }
 
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+/* 警告状态下，只有数字会脉冲，闹钟图标不变 */
+.timer-display.warning .timer-icon {
+    transform: none;
+    animation: none;
+    opacity: 0.9;
+}
+
+.timer-display.warning .timer-value {
+    /* 警告状态下数字会脉冲，但位置保持不变 */
+    animation: pulse-value 0.5s infinite;
+}
+
+@keyframes pulse-value {
+    0%, 100% { 
+        transform: translate(-50%, -50%) scale(1);
+        margin-top: -0.03em;
+        margin-left: 0;
+    }
+    50% { 
+        transform: translate(-50%, -50%) scale(1.2);
+        margin-top: -0.03em;
+        margin-left: 0;
+    }
 }
 
 .game-wrapper {
     position: relative;
     display: inline-block;
-}
-
-.timer-display {
-    font-size: 2em;
-    color: #333;
-    font-weight: bold;
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.9);
-    padding: 10px 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    z-index: 100;
-    min-width: 60px;
-    text-align: center;
-    white-space: nowrap;
 }
 
 .game-wrapper {
@@ -153,38 +210,18 @@ body {
     background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
     display: block;
+    width: 100%;
+    max-width: 100%;
+    min-height: 300px;
 }
 
 .controls-info {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    margin-top: 20px;
-    gap: 20px;
+    display: none; /* 隐藏控制说明，让游戏画面更大 */
 }
 
 .control-player1,
 .control-player2 {
-    background: #f8f9fa;
-    padding: 15px 25px;
-    border-radius: 10px;
-    text-align: center;
-    flex: 1;
-    border: 2px solid #ff6b9d;
-}
-
-.control-player1 h3,
-.control-player2 h3 {
-    color: #ff6b9d;
-    margin-bottom: 10px;
-    font-size: 1.2em;
-}
-
-.control-player1 p,
-.control-player2 p {
-    font-size: 1.1em;
-    color: #666;
-    font-weight: bold;
+    display: none;
 }
 
 .avatar-selection-screen {
@@ -255,6 +292,10 @@ body {
     justify-content: center;
     align-items: center;
     position: relative;
+    touch-action: manipulation; /* 优化移动端触摸 */
+    -webkit-tap-highlight-color: transparent; /* 移除点击高亮 */
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .avatar-option:hover {
@@ -284,6 +325,10 @@ body {
     font-weight: bold;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     transition: all 0.2s;
+    touch-action: manipulation; /* 优化移动端触摸 */
+    -webkit-tap-highlight-color: transparent; /* 移除点击高亮 */
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .start-game-btn:hover:not(:disabled) {
@@ -391,17 +436,184 @@ body {
     transform: scale(0.98);
 }
 
+/* 虚拟控制按钮样式 */
+.mobile-controls {
+    display: none; /* 默认隐藏，移动端显示 */
+}
+
+.virtual-joystick {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.control-row {
+    display: flex;
+    gap: 5px;
+}
+
+.control-btn {
+    width: 50px;
+    height: 50px;
+    border: 3px solid #ff6b9d;
+    border-radius: 10px;
+    background: rgba(255, 107, 157, 0.2);
+    color: #ff6b9d;
+    font-size: 1.5em;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    touch-action: manipulation;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.1s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.control-btn:active,
+.control-btn.active {
+    background: #ff6b9d;
+    color: white;
+    transform: scale(0.95);
+}
+
+.control-btn.up,
+.control-btn.down {
+    width: 50px;
+}
+
+.control-btn.left,
+.control-btn.right {
+    width: 50px;
+}
+
+.desktop-controls {
+    display: block;
+}
+
+.mobile-controls-text {
+    display: none; /* 默认隐藏，移动端显示 */
+    color: #666;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.desktop-virtual-buttons {
+    display: none; /* 默认隐藏，桌面端需要时显示 */
+}
+
+/* Canvas 触摸控制样式 */
+#gameCanvas {
+    touch-action: none; /* 禁用默认触摸行为，允许自定义触摸控制 */
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* 响应式设计优化 */
 @media (max-width: 900px) {
     #gameCanvas {
         width: 100%;
         height: auto;
+        max-width: 100%;
+        touch-action: none; /* 移动端禁用默认触摸行为 */
     }
     
     .header h1 {
-        font-size: 2em;
+        font-size: 1.8em;
+    }
+    
+    .header-top h1 {
+        font-size: 1.5em;
     }
     
     .scores {
+        flex-direction: row; /* 保持并排显示 */
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+    
+    .score {
+        padding: 6px 12px;
+        min-width: 80px;
+    }
+    
+    .player-avatar {
+        width: 25px;
+        height: 25px;
+    }
+    
+    .score-value {
+        font-size: 1.3em;
+    }
+    
+    .timer-display {
+        font-size: 1.8em;
+        width: 1.2em;
+        height: 1.2em;
+    }
+    
+    .timer-icon {
+        font-size: 1em;
+    }
+    
+    .timer-value {
+        font-size: 0.45em;
+    }
+    
+    /* 移动端：控制说明已完全隐藏，不需要显示 */
+    .controls-info {
+        display: none !important;
+    }
+    
+    .control-player1,
+    .control-player2 {
+        display: none !important;
+    }
+    
+    .avatar-selection-content {
+        padding: 20px;
+        max-width: 95%;
+    }
+    
+    .avatar-selection {
         flex-direction: column;
+        gap: 20px;
+    }
+    
+    .avatar-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+    }
+    
+    .avatar-option {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .avatar-option canvas {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media (max-width: 600px) {
+    .header h1 {
+        font-size: 1.3em;
+    }
+    
+    .score-value {
+        font-size: 1.8em;
+    }
+    
+    .control-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1em;
+    }
+    
+    .game-container {
+        padding: 10px;
     }
 }
